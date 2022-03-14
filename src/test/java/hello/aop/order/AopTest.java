@@ -1,6 +1,7 @@
 package hello.aop.order;
 
 import hello.aop.AspectV1;
+import hello.aop.AspectV2;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -10,7 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 
 @Slf4j
-@Import(AspectV1.class)
+// @Import(AspectV1.class)
+@Import(AspectV2.class)
 @SpringBootTest
 public class AopTest {
 
@@ -37,3 +39,4 @@ public class AopTest {
         Assertions.assertThatThrownBy(() -> orderService.orderItem("ex")).isInstanceOf(IllegalStateException.class);
     }
 }
+
