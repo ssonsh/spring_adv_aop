@@ -32,6 +32,11 @@ public class ExecutionTest {
     }
 
     @Test
+    void exactMatch1(){
+        pointcut.setExpression("execution(String hello(String))");
+        Assertions.assertThat(pointcut.matches(helloMethod, MemberServiceImpl.class)).isTrue();
+    }
+    @Test
     void allMatch(){
         pointcut.setExpression("execution(* *(..))");
         Assertions.assertThat(pointcut.matches(helloMethod, MemberServiceImpl.class)).isTrue();
