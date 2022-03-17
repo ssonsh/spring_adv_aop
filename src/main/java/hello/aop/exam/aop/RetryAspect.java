@@ -1,0 +1,32 @@
+package hello.aop.exam.aop;
+
+import hello.aop.exam.annotation.Retry;
+import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+
+@Slf4j
+@Aspect
+public class RetryAspect {
+
+    @Around("@annotation(retry)")
+    public Object doRetry(ProceedingJoinPoint joinPoint, Retry retry) throws Throwable{
+
+        log.info("[retry] {}, retry = {}", joinPoint.getSignature(), retry);
+
+        // @Retry 애노테이션에 설정된 value 값
+        int maxRetry = retry.value();
+        Exception exceptionHandler = null;
+
+        for (int retryCount = 1; retryCount <= maxRetry; retryCount++) {
+            try{
+                log.info("[retry] try count={}/{}", retryCount, maxRetry);
+                return joinPoint.proceed();
+            }catch(Exception e){
+                exceptionHandler = e;
+            }
+        }
+        throw exceptionHandler;
+    }
+}
