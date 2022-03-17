@@ -49,10 +49,12 @@ public class ParameterTest {
             return joinPoint.proceed();
         }
 
-        @Around("allMember() && args(arg,..)")
+        @Before("allMember() && args(arg,..)")
         public void logArgs3(String arg) {
             log.info("[logArgs3] arg={}", arg);
         }
+
+        //////////////////////////////////////////////////////////////////////////////////
 
         @Before("allMember() && this(obj)")
         public void thisArgs(JoinPoint joinPoint, MemberService obj) {
